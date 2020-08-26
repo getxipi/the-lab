@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import Question from './components/Question';
 import quizQuestions from './api/quizQuestions';
 import Quiz from './components/Quiz';
+import Result from './components/Results'
 
 import logo from './xipi-logo.svg';
 import './App.css';
@@ -59,7 +60,7 @@ class App extends Component {
     if (this.state.questionId < quizQuestions.length) {
         setTimeout(() => this.setNextQuestion(), 300);
       } else {
-        // do nothing for now
+        setTimeout(() => this.setResults(this.getResults()), 300);
       }
   };
 
@@ -85,6 +86,42 @@ class App extends Component {
     });
   }
 
+  getResults() {
+    const answersCount = this.state.answersCount;
+    const answersCountKeys = Object.keys(answersCount);
+    const answersCountValues = answersCountKeys.map((key) => answersCount[key]);
+    const maxAnswerCount = Math.max.apply(null, answersCountValues);
+  
+    return answersCountKeys.filter((key) => answersCount[key] === maxAnswerCount);
+  }
+
+  setResults (result) {
+    if (result.length === 1) {
+      this.setState({ result: result[0] });
+    } else {
+      this.setState({ result: 'Undetermined' });
+    }
+  }
+
+  renderQuiz() {
+    return (
+      <Quiz
+        answer={this.state.answer}
+        answerOptions={this.state.answerOptions}
+        questionId={this.state.questionId}
+        question={this.state.question}
+        questionTotal={quizQuestions.length}
+        onAnswerSelected={this.handleAnswerSelected}
+      />
+    );
+  }
+  
+  renderResult() {
+    return (
+      <Result quizResult={this.state.result} />
+    );
+  }
+
   render(){
     return (
       <div className="App">
@@ -92,14 +129,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>React Quiz</h2>
         </div>
-        <Quiz
-          answer={this.state.answer}
-          answerOptions={this.state.answerOptions}
-          questionId={this.state.questionId}
-          question={this.state.question}
-          questionTotal={quizQuestions.length}
-          onAnswerSelected={this.handleAnswerSelected}
-        />
+        {this.state.result ? this.renderResult() : this.renderQuiz()}
       </div>
     );
   }
