@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 
-import Question from './components/Question';
 import quizQuestions from './api/quizQuestions';
 import Quiz from './components/Quiz';
 import Result from './components/Results'
@@ -118,7 +117,7 @@ class App extends Component {
   
   renderResult() {
     return (
-      <Result quizResult={this.state.result} />
+      <Result quizResult={this.state.result} counter={this.state.counter} />
     );
   }
 

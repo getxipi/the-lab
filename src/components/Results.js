@@ -5,6 +5,8 @@ function Result(props) {
   return (
     <div className="result">
       You prefer <strong>{props.quizResult}</strong>!
+      These were your answers:
+      <ul>{props.counter}</ul>
     </div>
   );
 }
