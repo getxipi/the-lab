@@ -64,11 +64,11 @@ body {
 
 /* AnswerOption Component */
 .answerOption {
-  border-top: 1px solid #eee;
+  border-top: 1px solid #A5D8FF;
 }
 
 .answerOption:hover {
-  background-color: #eefbfe;
+  background-color: #F87575;
 }
 
 .radioCustomButton {
@@ -81,7 +81,6 @@ body {
 .radioCustomLabel {
   display: inline-block;
   vertical-align: middle;
-  cursor: pointer;
 }
 
 .radioCustomLabel {

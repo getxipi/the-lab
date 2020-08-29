@@ -4,17 +4,27 @@ import Question from '../components/Question';
 import QuestionCount from '../components/QuestionCount';
 import AnswerOption from '../components/AnswerOption';
 
+import { List } from 'antd';
+
 function Quiz(props) {
     function renderAnswerOptions(key) {
         return (
-          <AnswerOption
-            key={key.content}
-            answerContent={key.content}
-            answerType={key.type}
-            answer={props.answer}
-            questionId={props.questionId}
-            onAnswerSelected={props.onAnswerSelected}
-          />
+          <List.Item>
+              <AnswerOption
+                key={key.content}
+                answerContent={key.content}
+                answerType={key.type}
+                answer={props.answer}
+                questionId={props.questionId}
+                onAnswerSelected={props.onAnswerSelected}>
+              {console.log("args being passed key: ", key.content)};
+              {console.log("answerContent: ", key.content)};
+              {console.log("answerType: ", key.type)};
+              {console.log("answer: ", props.answer)};
+              {console.log("questionId", props.questionId)};
+              {console.log("onAnswerSelected:", props.onAnswerSelected)};
+            </AnswerOption>
+          </List.Item>
         );
     }
     
@@ -25,9 +35,11 @@ function Quiz(props) {
             total={props.questionTotal}
           />
           <Question content={props.question} />
-          <ul className="answerOptions">
+          <List 
+            grid={{ gutter: 16, column: 4}}
+            className="answerOptions">
             {props.answerOptions.map(renderAnswerOptions)}
-          </ul>
+          </List>
         </div>
     );
   }
