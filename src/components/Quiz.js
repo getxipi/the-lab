@@ -4,27 +4,27 @@ import Question from '../components/Question';
 import QuestionCount from '../components/QuestionCount';
 import AnswerOption from '../components/AnswerOption';
 
-import { List } from 'antd';
+import { List, Row, Col } from 'antd';
 
 function Quiz(props) {
     function renderAnswerOptions(key) {
         return (
-          <List.Item>
-              <AnswerOption
-                key={key.content}
-                answerContent={key.content}
-                answerType={key.type}
-                answer={props.answer}
-                questionId={props.questionId}
-                onAnswerSelected={props.onAnswerSelected}>
-              {console.log("args being passed key: ", key.content)};
-              {console.log("answerContent: ", key.content)};
-              {console.log("answerType: ", key.type)};
-              {console.log("answer: ", props.answer)};
-              {console.log("questionId", props.questionId)};
-              {console.log("onAnswerSelected:", props.onAnswerSelected)};
-            </AnswerOption>
-          </List.Item>
+              <List.Item className="gutter-row" span={6}>
+                    <AnswerOption 
+                      key={key.content}
+                      answerContent={key.content}
+                      answerType={key.type}
+                      answer={props.answer}
+                      questionId={props.questionId}
+                      onAnswerSelected={props.onAnswerSelected}>
+                    {console.log("args being passed key: ", key.content)};
+                    {console.log("answerContent: ", key.content)};
+                    {console.log("answerType: ", key.type)};
+                    {console.log("answer: ", props.answer)};
+                    {console.log("questionId", props.questionId)};
+                    {console.log("onAnswerSelected:", props.onAnswerSelected)};
+                    </AnswerOption>
+              </List.Item>
         );
     }
     
@@ -35,11 +35,12 @@ function Quiz(props) {
             total={props.questionTotal}
           />
           <Question content={props.question} />
-          <List 
-            grid={{ gutter: 16, column: 4}}
-            className="answerOptions">
-            {props.answerOptions.map(renderAnswerOptions)}
-          </List>
+          <Row  gutter={16}>
+            <List className="answerOptions"
+              grid={{gutter: 16}}>
+                {props.answerOptions.map(renderAnswerOptions)}
+            </List>
+          </Row>
         </div>
     );
   }

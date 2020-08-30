@@ -18,15 +18,19 @@ class App extends Component {
       answerOptions: [],
       answer: '',
       answersCount: {},
-      result: ''
+      result: '',
+      score: 0
     };
 
     this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
   };
-
+  
+  //Essentially this instantiates the first question
+  //maps all questions and answers pulled from API into quizQuestions 
   componentDidMount() {
     //ShuffleArray randomizes answer optionss
-    const shuffledAnswerOptions = quizQuestions.map((question) => this.shuffleArray(question.answers));  
+    const shuffledAnswerOptions = quizQuestions.map((question) => this.shuffleArray(question.answers));
+    console.log(shuffledAnswerOptions)  ;
   
     this.setState({
       question: quizQuestions[0].question,
@@ -53,15 +57,29 @@ class App extends Component {
     return array;
   };
 
-
+  //TODO: define correct answer check here
+  // look at score addition for reference, we probably have to do something like this:
+  // also look at "setUserAnser" for a place ot execute answer checks
   handleAnswerSelected(event) {
     this.setUserAnswer(event.currentTarget.value);
     if (this.state.questionId < quizQuestions.length) {
         setTimeout(() => this.setNextQuestion(), 300);
+        this.setState({
+          score: this.state.score + 1
+        });
+        console.log("Score so far:", this.state.score);
       } else {
         setTimeout(() => this.setResults(this.getResults()), 300);
+        this.setState({
+          score: this.state.score + 1
+        });
       }
   };
+
+  //here we are looking at state, if a given answer categfory is already in answersCount we increment 
+  // by 1 else initialize the index eg: {sony: 0} > {sony: 1}, etc
+  //TODO: use this to have a dictionary of "correct" and "incorrect" answers, or some more detailed 
+  // data digestion
 
   setUserAnswer(answer) {
     this.setState((state) => ({
@@ -71,6 +89,7 @@ class App extends Component {
       },
       answer: answer
     }));
+    console.log("answercounts: ", this.state.answersCount)
   }
 
   setNextQuestion() {
@@ -125,7 +144,6 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h2>React Quiz</h2>
         </div>
         {this.state.result ? this.renderResult() : this.renderQuiz()}
